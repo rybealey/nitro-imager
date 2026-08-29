@@ -2,7 +2,7 @@ import { Canvas, createCanvas } from 'canvas';
 import { Request, Response } from 'express';
 import { createWriteStream, writeFile, WriteStream } from 'fs';
 import * as GIFEncoder from 'gifencoder';
-import { File, FileUtilities, Point } from '../../../../core';
+import { CanvasUtilities, File, FileUtilities, Point } from '../../../../core';
 import { Application } from '../../../Application';
 import { AvatarScaleType, IAvatarImage } from '../../../avatar';
 import { BuildFigureOptionsRequest, BuildFigureOptionsStringRequest, ProcessActionRequest, ProcessDanceRequest, ProcessDirectionRequest, ProcessEffectRequest, ProcessGestureRequest, RequestQuery } from './utils';
@@ -134,7 +134,7 @@ export const HabboImagingRouterGet = async (request: Request<any, any, any, Requ
             }
             else
             {
-                const buffer = tempCanvas.toBuffer();
+                const buffer = CanvasUtilities.cropTransparentPixels(tempCanvas).toBuffer();
 
                 response
                     .writeHead(200, {
